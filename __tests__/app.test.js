@@ -5,10 +5,8 @@ const app = require('../lib/app');
 
 // Dummy user for testing
 const mockUser = {
-  firstName: 'Mock',
-  lastName: 'User',
-  email: 'test@example.com',
-  password: '12345678',
+  username: 'kevin',
+  password: 'password',
 };
 
 // const registerAndLogin = async (userProps = {}) => {
@@ -27,10 +25,8 @@ describe('. routes', () => {
   });
 
   it('signs a user up with POST', async () => {
-    const res = await request(app)
-      .post('/api/v1/auth/')
-      .send({ username: 'kevin', password: 'password' });
+    const res = await request(app).post('/api/v1/users/').send(mockUser);
 
-    expect(res.body).toEqual({ id: expect.any(String), username: 'kevin' });
+    expect(res.body).toEqual({ id: expect.any(String), ...mockUser });
   });
 });
