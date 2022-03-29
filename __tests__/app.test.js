@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 // Dummy user for testing
 const mockUser = {
-  username: 'kevin',
+  email: 'kevin@email.com',
   password: 'password',
 };
 
