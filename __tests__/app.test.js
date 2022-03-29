@@ -9,12 +9,6 @@ const mockUser = {
   password: 'password',
 };
 
-// const registerAndLogin = async (userProps = {}) => {
-//   const password = userProps.password ?? mockUser.password;
-
-//   const agent = request.agent(app);
-// };
-
 describe('. routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -28,5 +22,13 @@ describe('. routes', () => {
     const res = await request(app).post('/api/v1/users/').send(mockUser);
     const { email } = mockUser;
     expect(res.body).toEqual({ id: expect.any(String), email });
+  });
+
+  it('should login user', async () => {
+    const res = await request(app)
+      .post('/api/v1/users/sessions')
+      .send(mockUser);
+
+    expect(res.body).toEqual({ message: 'Signed in successfully', mockUser });
   });
 });
