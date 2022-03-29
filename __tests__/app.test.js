@@ -26,7 +26,7 @@ describe('. routes', () => {
 
   it('signs a user up with POST', async () => {
     const res = await request(app).post('/api/v1/users/').send(mockUser);
-
-    expect(res.body).toEqual({ id: expect.any(String), ...mockUser });
+    const { email } = mockUser;
+    expect(res.body).toEqual({ id: expect.any(String), email });
   });
 });
