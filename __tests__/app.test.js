@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const UserService = require('../lib/services/UserService');
 
 // Dummy user for testing
 const mockUser = {
@@ -25,6 +26,11 @@ describe('. routes', () => {
   });
 
   it('should login user', async () => {
+    const mockUser = await UserService.create({
+      email: 'kevin@email.com',
+      password: 'password',
+    });
+
     const res = await request(app)
       .post('/api/v1/users/sessions')
       .send(mockUser);
