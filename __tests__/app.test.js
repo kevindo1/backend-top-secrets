@@ -26,7 +26,7 @@ describe('. routes', () => {
   });
 
   it('should login user', async () => {
-    const mockUser = await UserService.create({
+    const user = await UserService.create({
       email: 'kevin@email.com',
       password: 'password',
     });
@@ -35,6 +35,6 @@ describe('. routes', () => {
       .post('/api/v1/users/sessions')
       .send(mockUser);
 
-    expect(res.body).toEqual({ message: 'Signed in successfully', mockUser });
+    expect(res.body).toEqual({ message: 'Signed in successfully', user });
   });
 });
