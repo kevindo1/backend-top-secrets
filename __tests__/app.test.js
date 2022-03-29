@@ -11,6 +11,12 @@ const mockUser = {
   password: '12345678',
 };
 
+// const registerAndLogin = async (userProps = {}) => {
+//   const password = userProps.password ?? mockUser.password;
+
+//   const agent = request.agent(app);
+// };
+
 describe('. routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -18,5 +24,13 @@ describe('. routes', () => {
 
   afterAll(() => {
     pool.end();
+  });
+
+  it('signs a user up with POST', async () => {
+    const res = await request(app)
+      .post('/api/v1/auth/')
+      .send({ username: 'kevin', password: 'password' });
+
+    expect(res.body).toEqual({ id: expect.any(String), username: 'kevin' });
   });
 });
