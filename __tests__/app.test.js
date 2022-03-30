@@ -52,7 +52,7 @@ describe('. routes', () => {
     });
   });
 
-  it.only('should get all secrets when signed in', async () => {
+  it('should get all secrets when signed in', async () => {
     const agent = request.agent(app);
 
     await UserService.create({
