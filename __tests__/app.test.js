@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const Secrets = require('../lib/models/Secrets');
 
 // Dummy user for testing
 const mockUser = {
@@ -49,6 +50,25 @@ describe('. routes', () => {
     expect(res.body).toEqual({
       message: 'Signed out successfully',
       success: true,
+    });
+  });
+
+  it.only('should create secret', async () => {
+    const secret = {
+      title: 'secret1',
+      description: 'this is the first secret',
+    };
+
+    const res = await request(app).post('/api/v1/secrets').send({
+      title: 'secret1',
+      description: 'this is the first secret',
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      title: 'secret1',
+      description: 'this is the first secret',
+      createdAt: expect.any(String),
     });
   });
 
