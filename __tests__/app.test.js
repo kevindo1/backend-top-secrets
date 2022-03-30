@@ -54,7 +54,17 @@ describe('. routes', () => {
   });
 
   it('should create secret', async () => {
-    const res = await request(app).post('/api/v1/secrets').send({
+    const agent = request.agent(app);
+    await UserService.create({
+      email: 'kevin@email.com',
+      password: 'password',
+    });
+
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ email: 'kevin@email.com', password: 'password' });
+
+    const res = await agent.post('/api/v1/secrets').send({
       title: 'secret1',
       description: 'this is the first secret',
     });
