@@ -52,7 +52,7 @@ describe('. routes', () => {
     });
   });
 
-  it('should get all secrets when signed in', async () => {
+  it.only('should get all secrets when signed in', async () => {
     const agent = request.agent(app);
 
     await UserService.create({
@@ -63,10 +63,26 @@ describe('. routes', () => {
     let res = await agent.get('/api/v1/secrets');
     expect(res.status).toEqual(401);
 
+    // const secret1 = {
+    //   id: '1',
+    //   title: 'secret1',
+    //   description: 'this is the first secret',
+    //   created_at: '2022-03-30 00:43:12.723336+07',
+    // };
+
+    // const secret2 = {
+    //   id: '2',
+    //   title: 'secret2',
+    //   description: 'this is the second secret',
+    //   created_at: '2022-03-30 00:43:12.723336+07',
+    // };
+
     await agent
-      .post('/api/v1/users')
+      .post('/api/v1/users/sessions')
       .send({ email: 'kevin@email', password: 'password' });
     res = await agent.get('/api/v1/secrets');
+
+    expect(res.body).toEqual([secret1, secret2]);
     expect(res.status).toEqual(200);
   });
 });
