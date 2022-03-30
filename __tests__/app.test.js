@@ -20,7 +20,7 @@ describe('. routes', () => {
   });
 
   it('signs a user up with POST', async () => {
-    const res = await request(app).post('/api/v1/users/').send(mockUser);
+    const res = await request(app).post('/api/v1/users').send(mockUser);
     const { email } = mockUser;
     expect(res.body).toEqual({ id: expect.any(String), email });
   });
@@ -63,26 +63,26 @@ describe('. routes', () => {
     let res = await agent.get('/api/v1/secrets');
     expect(res.status).toEqual(401);
 
-    // const secret1 = {
-    //   id: '1',
-    //   title: 'secret1',
-    //   description: 'this is the first secret',
-    //   created_at: '2022-03-30 00:43:12.723336+07',
-    // };
-
-    // const secret2 = {
-    //   id: '2',
-    //   title: 'secret2',
-    //   description: 'this is the second secret',
-    //   created_at: '2022-03-30 00:43:12.723336+07',
-    // };
-
     await agent
       .post('/api/v1/users/sessions')
-      .send({ email: 'kevin@email', password: 'password' });
+      .send({ email: 'kevin@email.com', password: 'password' });
+
     res = await agent.get('/api/v1/secrets');
 
-    expect(res.body).toEqual([secret1, secret2]);
+    expect(res.body).toEqual([
+      {
+        id: '1',
+        title: 'secret1',
+        description: 'this is the first secret',
+        createdAt: expect.any(String),
+      },
+      {
+        id: '2',
+        title: 'secret2',
+        description: 'this is the second secret',
+        createdAt: expect.any(String),
+      },
+    ]);
     expect(res.status).toEqual(200);
   });
 });
