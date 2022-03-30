@@ -61,7 +61,7 @@ describe('. routes', () => {
     });
 
     let res = await agent.get('/api/v1/secrets');
-    expect(res.status).toEqual(403);
+    expect(res.status).toEqual(401);
 
     await agent
       .post('/api/v1/users')
