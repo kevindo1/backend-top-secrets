@@ -48,5 +48,7 @@ describe('. routes', () => {
 
     expect(res.body).toEqual(user);
     expect(await findByEmail('kevin@email.com')).toBeNull();
+
+    expect({ message: 'Signed out successfully' });
   });
 });
