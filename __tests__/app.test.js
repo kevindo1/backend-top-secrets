@@ -67,5 +67,6 @@ describe('. routes', () => {
       .post('/api/v1/users')
       .send({ email: 'kevin@email', password: 'password' });
     res = await agent.get('/api/v1/secrets');
+    expect(res.status).toEqual(200);
   });
 });
