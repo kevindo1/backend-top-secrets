@@ -53,12 +53,7 @@ describe('. routes', () => {
     });
   });
 
-  it.only('should create secret', async () => {
-    const secret = {
-      title: 'secret1',
-      description: 'this is the first secret',
-    };
-
+  it('should create secret', async () => {
     const res = await request(app).post('/api/v1/secrets').send({
       title: 'secret1',
       description: 'this is the first secret',
