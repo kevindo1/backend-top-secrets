@@ -39,16 +39,16 @@ describe('. routes', () => {
   });
 
   it('logs out the user', async () => {
-    const user = await UserService.signIn({
+    await UserService.create({
       email: 'kevin@email.com',
       password: 'password',
     });
 
     const res = await request(app).delete('/api/v1/users/sessions');
 
-    expect(res.body).toEqual(user);
-    expect(await findByEmail('kevin@email.com')).toBeNull();
-
-    expect({ message: 'Signed out successfully' });
+    expect(res.body).toEqual({
+      message: 'Signed out successfully',
+      success: true,
+    });
   });
 });
