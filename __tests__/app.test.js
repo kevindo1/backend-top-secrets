@@ -44,11 +44,28 @@ describe('. routes', () => {
       password: 'password',
     });
 
-    const res = await request(app).delete('/api/v1/users/sessions');
+    let res = await request(app).delete('/api/v1/users/sessions');
 
     expect(res.body).toEqual({
       message: 'Signed out successfully',
       success: true,
     });
+  });
+
+  it('should get all secrets when signed in', async () => {
+    const agent = request.agent(app);
+
+    await UserService.create({
+      email: 'kevin@email.com',
+      password: 'password',
+    });
+
+    let res = await agent.get('/api/v1/secrets');
+    expect(res.status).toEqual(403);
+
+    await agent
+      .post('/api/v1/users')
+      .send({ email: 'kevin@email', password: 'password' });
+    res = await agent.get('/api/v1/secrets');
   });
 });
